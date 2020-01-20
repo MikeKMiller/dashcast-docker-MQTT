@@ -48,6 +48,11 @@ class DashboardLauncher():
         self.controller = dashcast.DashCastController()
         self.device.register_handler(self.controller)
 
+        # Breaking Change pychromecast 3.0
+        # Do not automatically start worker thread and connect in Chromecast constructor
+        # https://github.com/balloob/pychromecast/pull/271
+        self.device.wait()
+
         # register status listener
         receiver_controller = device.socket_client.receiver_controller
         receiver_controller.register_status_listener(self)
